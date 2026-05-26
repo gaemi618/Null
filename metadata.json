@@ -1,0 +1,6 @@
+{
+  "name": "무아는 무아지경!",
+  "description": "포근한 무아의 세계에서 널 존(Null Zone)으로 떨어지는 경험",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-spring: "Gowun Dodum", sans-serif;
+  --font-glitch: "Noto Sans KR", sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background-color: #000;
+}
+
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.1)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.3;
+}
+
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 40;
+  opacity: 0.05;
+  background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+}
+
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch-text::before {
+  color: #0ff;
+  z-index: -1;
+  animation: glitch-anim-1 2s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  color: #f0f;
+  z-index: -2;
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { clip-path: inset(20% 0 80% 0); transform: translate(-2px, 1px); }
+  20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+  40% { clip-path: inset(40% 0 50% 0); transform: translate(-2px, 2px); }
+  60% { clip-path: inset(80% 0 5% 0); transform: translate(2px, -2px); }
+  80% { clip-path: inset(10% 0 70% 0); transform: translate(-1px, 1px); }
+  100% { clip-path: inset(30% 0 40% 0); transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -1px); }
+  20% { clip-path: inset(30% 0 20% 0); transform: translate(-2px, 1px); }
+  40% { clip-path: inset(70% 0 10% 0); transform: translate(2px, -2px); }
+  60% { clip-path: inset(20% 0 50% 0); transform: translate(-2px, 2px); }
+  80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, -1px); }
+  100% { clip-path: inset(5% 0 80% 0); transform: translate(-1px, 1px); }
+}
+
+@keyframes float-error {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.5; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-100vh) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+.error-float {
+  position: fixed;
+  color: red;
+  font-family: monospace;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  animation: float-error 10s linear infinite;
+  z-index: 0;
+}
+
+@keyframes flash {
+  0%, 100% { background-color: black; }
+  50% { background-color: white; }
+}
+.flash-effect {
+  animation: flash 0.1s steps(2, end) 5;
+}
+
+@keyframes invert-colors {
+  0% { filter: invert(0); }
+  100% { filter: invert(1) sepia(1) hue-rotate(180deg) saturate(300%) contrast(200%); }
+}
+
+.hack-invert {
+  animation: invert-colors 1s forwards cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes crt-flicker {
+  0% { opacity: 0.9; }
+  5% { opacity: 1; text-shadow: 2px 0 2px rgba(255,0,0,0.5), -2px 0 2px rgba(0,255,0,0.5); }
+  10% { opacity: 0.85; }
+  15% { opacity: 1; text-shadow: none; }
+  100% { opacity: 1; }
+}
+.crt-container {
+  animation: crt-flicker 0.1s infinite alternate;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); filter: blur(0px) invert(0); }
+  10% { transform: translate(-15px, -5px) rotate(-2deg); filter: blur(2px) invert(1); }
+  20% { transform: translate(-5px, 0px) rotate(1deg); filter: blur(0px) invert(0); }
+  30% { transform: translate(10px, 5px) rotate(0deg); filter: blur(4px) invert(0.5); }
+  40% { transform: translate(1px, -1px) rotate(2deg); filter: blur(0px) invert(0); }
+  50% { transform: translate(-3px, 5px) rotate(-1deg); filter: blur(10px) invert(1); }
+  60% { transform: translate(-5px, 1px) rotate(0deg); filter: blur(0px) invert(0); }
+  70% { transform: translate(10px, 1px) rotate(-2deg); filter: blur(2px) hue-rotate(90deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); filter: blur(0px) invert(0); }
+  90% { transform: translate(5px, 5px) rotate(0deg); filter: blur(5px) invert(1); }
+  100% { transform: translate(1px, -5px) rotate(-1deg); filter: blur(0px) invert(0); }
+}
+
+.violent-shake {
+  animation: shake 0.1s infinite !important;
+}
